@@ -16,6 +16,7 @@ namespace API.Data
         public static async Task SeedUsers(DataContext context)
         {
             List<Channel> insertedChannels = new List<Channel>();
+            var reg = new System.Text.RegularExpressions.Regex(@"<img(?!.*alt).*?>");
 
             insertedChannels.Add(new Channel { Title = "Хабр", Link = @"https://habr.com/ru/rss/all/all/"});
             insertedChannels.Add(new Channel { Title = "Ixbt", Link = @"http://www.ixbt.com/export/news.rss"});
@@ -42,6 +43,8 @@ namespace API.Data
                         Item article = mapper.Map(currentItem);
                         article.ChannelTitle = channel.Title;
 
+                        article.Description = reg.Replace(article.Description, " ");
+                        
                         channel.Items.Add(article);
                         context.Items.Add(article);
                         context.SaveChangesAsync();
@@ -67,9 +70,11 @@ namespace API.Data
                         Item article = mapper.Map(currentItem);
                         readdingNews++;
 
-                        if(context.Items.Where(a => a.Title == article.Title).Count() == 0){
-                            
+                        if (context.Items.Where(a => a.Title == article.Title).Count() == 0)
+                        {
                             article.ChannelTitle = channel.Title;
+                            article.Description = reg.Replace(article.Description, " ");
+
 
                             channel.Items.Add(article);
                             context.Items.Add(article);

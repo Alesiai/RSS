@@ -1,0 +1,43 @@
+<div class="m-2">
+    <span>Sort by</span>
+    <button class="btn btn-outline-primary m-2" (click)="getItemsSortedByDate()">Name</button>
+    <button class="btn btn-outline-primary m-2" (click)="getItemsSortedByChannel()">Date</button>
+    <button class="btn btn-outline-primary m-2" (click)="getItems()">Default</button>
+</div>
+
+<div class="m-2">
+    <span>Choose Channel</span>
+    <select class="form-selct  m-2" [(ngModel)]="selected" >
+        <option *ngFor="let n of channels">{{n}}</option>
+    </select>
+    <button class="btn" (click)="getByChannelName()">Select</button>
+</div>
+
+<div class="m-2">
+    <span>Page</span>
+    <button class="btn btn-primary m-2" (click)="getPrevPage()"><i class="fa-solid fa-angle-left"></i></button>
+    {{page}}
+    <button class="btn btn-primary m-2" (click)="getNextPage()"><i class="fa-solid fa-angle-right"></i></button>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <tr>
+            <th>Id</th>
+            <th>Channel</th>
+            <th>Title</th>
+            <th>Link</th>
+            <th>Description</th>
+            <th>Publich date</th>
+        </tr>
+        <tr *ngFor="let item of items">
+            <td scope="row">{{item.id}}</td>
+            <td>{{item.channelTitle}}</td>
+            <td>{{item.title}}</td>
+            <td><a href="{{item.link}}"  target="_blank">{{item.link}}</a></td>
+            <td [innerHTML]="item.description"></td>
+            <td class="date">{{item.pubDate | date}}</td>
+        </tr>
+    </table>
+</div>
+
