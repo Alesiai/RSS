@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Item } from './models/item';
+import { ChannelsService } from './services/channels.service';
 import { ItemsService } from './services/items.service';
 
 @Component({
@@ -16,14 +17,15 @@ export class AppComponent implements OnInit{
   sorted: string  = '';
   pageInfo: any;
   totalPages: number;
-  channels = ["all", "Ixbt", "Хабр"];
+  channels: string[];
   selected: string = "all";
 
-  constructor(private itemService: ItemsService) {}
+  constructor(private itemService: ItemsService, private channelService:  ChannelsService) {}
   
   ngOnInit(): void {
     this.getPages();
     this.getItems();
+    this.getChannels();
   }
 
   getItems(){
@@ -38,6 +40,12 @@ export class AppComponent implements OnInit{
     this.itemService.getPageInfo(this.page, this.channel, this.sorted).subscribe(response => {
       this.pageInfo = response;
     });
+  }
+
+  getChannels(){
+    this.channelService.getChannels().subscribe(respnse => {
+      this.channels = respnse;
+    })
   }
 
   getItemsSortedByDate(){

@@ -15,9 +15,15 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Channel> GetItems()
+        public IEnumerable<string> GetItems()
         {
-            return _context.Channels.ToList();
+            var request = _context.Channels.ToList();
+            List<string> channelsToFront = new List<string>();
+            channelsToFront.Add("all");
+            foreach(Channel channel in request){
+                channelsToFront.Add(channel.Title);
+            }
+            return channelsToFront;
         }
     }
 }

@@ -1,16 +1,18 @@
+<h1 class="m-2">News feed</h1>
+
 <div class="m-2">
     <span>Sort by</span>
-    <button class="btn btn-outline-primary m-2" (click)="getItemsSortedByDate()">Name</button>
-    <button class="btn btn-outline-primary m-2" (click)="getItemsSortedByChannel()">Date</button>
+    <button class="btn btn-outline-primary m-2" (click)="getItemsSortedByDate()">Date</button>
+    <button class="btn btn-outline-primary m-2" (click)="getItemsSortedByChannel()">Name</button>
     <button class="btn btn-outline-primary m-2" (click)="getItems()">Default</button>
 </div>
 
 <div class="m-2">
-    <span>Choose Channel</span>
+    <span class>Choose Channel</span>
     <select class="form-selct  m-2" [(ngModel)]="selected" >
         <option *ngFor="let n of channels">{{n}}</option>
     </select>
-    <button class="btn" (click)="getByChannelName()">Select</button>
+    <button class="btn badge-success m-2" (click)="getByChannelName()">Select</button>
 </div>
 
 <div class="m-2">

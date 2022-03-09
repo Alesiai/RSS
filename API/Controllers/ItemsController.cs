@@ -73,8 +73,6 @@ public class ItemsController : ControllerBase
                     itemParams.PageNumber, itemParams.PageSize);
     
         PagedList page = new PagedList(result.TotalCount, result.CurrentPage, result.PageSize);
-
-        Console.WriteLine("HEEEEYYYYYYYYYYYYYYYYYYYY"  + page.TotalCount +  " " + page.TotalPages);
         
         return Ok(page);
     }
