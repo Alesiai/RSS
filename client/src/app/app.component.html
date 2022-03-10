@@ -9,10 +9,9 @@
 
 <div class="m-2">
     <span class>Choose Channel</span>
-    <select class="form-selct  m-2" [(ngModel)]="selected" >
+    <select class="btn btn-outline-primary  m-2" [(ngModel)]="selected" (click)="getByChannelName()">
         <option *ngFor="let n of channels">{{n}}</option>
     </select>
-    <button class="btn badge-success m-2" (click)="getByChannelName()">Select</button>
 </div>
 
 <div class="m-2">
@@ -38,7 +37,7 @@
             <td>{{item.title}}</td>
             <td><a href="{{item.link}}"  target="_blank">{{item.link}}</a></td>
             <td [innerHTML]="item.description"></td>
-            <td class="date">{{item.pubDate | date}}</td>
+            <td class="date">{{item.pubDate | date :'short'}}</td>
         </tr>
     </table>
 </div>

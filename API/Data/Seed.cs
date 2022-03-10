@@ -1,11 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using System.Xml;
-using Microsoft.EntityFrameworkCore;
 using API.Helpers;
 using API.Entities;
 
@@ -24,7 +17,7 @@ namespace API.Data
             foreach(Channel channel in insertedChannels){
                 if(context.Channels.Where(a => a.Title == channel.Title).Count() == 0){
                     context.Channels.Add(channel);
-                    context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
                 }
             }
 
@@ -41,13 +34,13 @@ namespace API.Data
                     foreach (XmlNode currentItem in nodeList)
                     {
                         Item article = mapper.Map(currentItem);
+                        
                         article.ChannelTitle = channel.Title;
-
                         article.Description = reg.Replace(article.Description, " ");
                         
                         channel.Items.Add(article);
                         context.Items.Add(article);
-                        context.SaveChangesAsync();
+                        await context.SaveChangesAsync();
 
                         readdingNews++;
                     }
@@ -75,19 +68,17 @@ namespace API.Data
                             article.ChannelTitle = channel.Title;
                             article.Description = reg.Replace(article.Description, " ");
 
-
                             channel.Items.Add(article);
                             context.Items.Add(article);
-                            
-                            context.SaveChangesAsync();
+                            await context.SaveChangesAsync();
+
                             savingNews++;
                         }
                     }
                     context.Channels.Update(channel);
                 }
-                 Console.WriteLine("Count of reading news: " + readdingNews +" and saving news: " + savingNews);
+                Console.WriteLine("Count of reading news: " + readdingNews +" and saving news: " + savingNews);
             }
-        
             await context.SaveChangesAsync();
         }
     }
